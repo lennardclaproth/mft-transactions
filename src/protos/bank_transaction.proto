@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "MyFinancialTracker.Transactions";
+
+package BankTransaction;
+
+service BankTransactionHandler {
+  rpc BankTransactions (Empty) returns (BankTransactionsReply);
+}
+
+message StatusMessage {
+    string response = 1;
+}
+
+message Empty {
+
+}
+
+message BankTransactionsReply {
+  repeated BankTransaction BankTransactions = 1;
+}
+
+message BankTransaction {
+    int64 Id = 1;
+    string Source = 2;
+    int64 TimeStamp = 3;
+    string Description = 4;
+    string hash = 5;
+    string Statement = 6;
+    int64 UserId = 7;
+    string ImportId = 8;
+}

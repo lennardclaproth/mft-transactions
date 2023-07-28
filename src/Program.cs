@@ -1,14 +1,16 @@
-using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
 using MyFinancialTracker.Transactions;
+using MyFinancialTracker.Transactions.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetSection("transactions-db").GetSection("ConnectionString").Value;
 var serverVersion = ServerVersion.AutoDetect(connectionString);
 
-builder.Services.AddDbContext<BankTransactionContext>(
+builder.Services.AddGrpc();
+builder.Services.AddGrpcReflection();
+
+builder.Services.AddDbContext<TransactionContext>(
             dbContextOptions => dbContextOptions
                 .UseMySql(connectionString, serverVersion)
                 // The following three options help with debugging, but should
@@ -17,49 +19,13 @@ builder.Services.AddDbContext<BankTransactionContext>(
                 // .EnableSensitiveDataLogging()
                 // .EnableDetailedErrors()
         );
-
-builder.Services.AddDbContext<StockTransactionContext>(
-    dbContextOptions => dbContextOptions.UseMySql(connectionString, serverVersion)
-);
-
-builder.Services.AddControllers().AddJsonOptions(
-    options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
-
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
-builder.Services.AddApiVersioning(o =>
-{
-    o.AssumeDefaultVersionWhenUnspecified = true;
-    o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
-    o.ReportApiVersions = true;
-    o.ApiVersionReader = ApiVersionReader.Combine(
-        new QueryStringApiVersionReader("api-version"),
-        new HeaderApiVersionReader("X-Version"),
-        new MediaTypeApiVersionReader("ver"));
-});
-
-builder.Services.AddScoped<BankTransactionService>();
-builder.Services.AddScoped<BankTransactionRepository>();
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(TransactionRepository<>));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.MapGrpcService<BankTransactionService>();
+app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
-app.UseHttpsRedirection();
-
-app.UseCors(MyAllowSpecificOrigins);
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.MapGrpcReflectionService();
 
 app.Run();
