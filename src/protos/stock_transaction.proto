@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "MyFinancialTracker.Transactions.Bank";
+option csharp_namespace = "MyFinancialTracker.Transactions.Stock";
 
 package Transaction;
 
@@ -42,9 +42,13 @@ message Transaction {
     int64 Id = 1;
     string Source = 2;
     int64 TimeStamp = 3;
-    string Description = 4;
-    string hash = 5;
-    string Statement = 6;
-    int64 UserId = 7;
-    string ImportId = 8;
+    string Ticker = 4;
+    string Action = 5;
+    int64 UserId = 6;
+    string ImportId = 7;
+    int32 Amount = 8;
+    double Price = 9;
+    double Commission = 10;
+    double AutoFX = 11;
+    double Total = 12;
 }

@@ -4,14 +4,14 @@ namespace MyFinancialTracker.Transactions.EntityFrameworkCore;
 
 public class TransactionContext : DbContext
 {
-    public DbSet<BankTransaction>? BankTransactions { get; set; }
+    public DbSet<Bank.Transaction>? BankTransactions { get; set; }
 
     public TransactionContext(DbContextOptions<TransactionContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<BankTransaction>().HasKey(tx => tx.Id);
-        modelBuilder.Entity<BankTransaction>()
+        modelBuilder.Entity<Bank.Transaction>().HasKey(tx => tx.Id);
+        modelBuilder.Entity<Bank.Transaction>()
             .Property(tx => tx.Id)
             .ValueGeneratedOnAdd();
     }

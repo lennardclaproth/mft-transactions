@@ -1,6 +1,0 @@
-Id,Source,TimeStamp,Description,hash,Statement,UserId,ImportId
-1,Online,1679780150,Grocery shopping,abcd1234,July Statement,123456,IMP-2023-001
-2,In-store,1679798550,Gasoline purchase,efgh5678,July Statement,789012,IMP-2023-002
-3,ATM,1679816950,Withdrawal,$$12aabb,July Statement,345678,IMP-2023-001
-4,Online,1679835350,Electronics purchase,xyz98765,July Statement,901234,IMP-2023-003
-5,In-store,1679853750,Restaurant bill,pqrs4321,July Statement,567890,IMP-2023-002

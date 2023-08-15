@@ -4,8 +4,8 @@ namespace MyFinancialTracker.Transactions.EntityFrameworkCore
 {
     public interface ITransactionRepository<TEntity> where TEntity : class
     {
-        public List<TEntity> GetAll();
-        public void InsertMany(List<TEntity> entities);
+        public IEnumerable<TEntity> GetAll();
+        public void InsertMany(IEnumerable<TEntity> entities);
         public void SaveChanges();
     }
 
@@ -17,12 +17,12 @@ namespace MyFinancialTracker.Transactions.EntityFrameworkCore
             _context = context;
         }
 
-        public List<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return _context.Set<TEntity>();
         }
 
-        public void InsertMany(List<TEntity> entities)
+        public void InsertMany(IEnumerable<TEntity> entities)
         {
             _context.AddRange(entities);
             int addedCount = _context.ChangeTracker.Entries<TEntity>()
