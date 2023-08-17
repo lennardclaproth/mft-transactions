@@ -4,7 +4,7 @@ using MyFinancialTracker.Transactions.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetSection("transactions-db").GetSection("ConnectionString").Value;
+var connectionString = builder.Configuration.GetValue<string>("TransactionsDb:ConnectionString");
 var serverVersion = ServerVersion.AutoDetect(connectionString);
 
 builder.Services.AddGrpc();
