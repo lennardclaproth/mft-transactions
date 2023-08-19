@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace MyFinancialTracker.Transactions.EntityFrameworkCore;
+namespace LClaproth.MyFinancialTracker.Transactions.EntityFrameworkCore;
 
 public class TransactionContext : DbContext
 {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyFinancialTracker.Transactions.EntityFrameworkCore;
+using LClaproth.MyFinancialTracker.Transactions.EntityFrameworkCore;
 
 #nullable disable
 

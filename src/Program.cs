@@ -1,6 +1,9 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using MyFinancialTracker.Transactions;
-using MyFinancialTracker.Transactions.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using LClaproth.MyFinancialTracker.Transactions;
+using LClaproth.MyFinancialTracker.Transactions.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,22 @@ builder.Services.AddDbContext<TransactionContext>(
                 // .EnableSensitiveDataLogging()
                 // .EnableDetailedErrors()
         );
+
+builder.Services.AddAuthentication(opt => {
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(opt => {
+    opt.TokenValidationParameters = new TokenValidationParameters {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
+        ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience"),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Secret")))
+    };
+});
+
 builder.Services.AddScoped(typeof(ITransactionRepository<>), typeof(TransactionRepository<>));
 
 var app = builder.Build();

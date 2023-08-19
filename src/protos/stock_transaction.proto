@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "MyFinancialTracker.Transactions.Stock";
+option csharp_namespace = "LClaproth.MyFinancialTracker.Transactions.Stock";
 
 package Transaction;
 

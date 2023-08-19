@@ -1,7 +1,7 @@
 using Grpc.Core;
-using MyFinancialTracker.Transactions.EntityFrameworkCore;
+using LClaproth.MyFinancialTracker.Transactions.EntityFrameworkCore;
 
-namespace MyFinancialTracker.Transactions;
+namespace LClaproth.MyFinancialTracker.Transactions;
 
 public class BankTransactionService : Bank.Handler.HandlerBase
 {
@@ -15,6 +15,7 @@ public class BankTransactionService : Bank.Handler.HandlerBase
 
     public override async Task<Bank.Response> Transactions(Bank.Empty request, ServerCallContext context)
     {
+        var user = context.GetHttpContext().User;
         var data = new Bank.Data{
             Source = "MongoDB"
         };
