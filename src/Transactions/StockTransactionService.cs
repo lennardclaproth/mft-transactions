@@ -1,7 +1,4 @@
-﻿using Grpc.Core;
-using LClaproth.MyFinancialTracker.Transactions.EntityFrameworkCore;
-
-namespace LClaproth.MyFinancialTracker.Transactions;
+﻿namespace LClaproth.MyFinancialTracker.Transactions;
 
 public class StockTransactionService : Stock.Handler.HandlerBase
 {

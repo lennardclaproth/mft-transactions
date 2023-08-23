@@ -1,8 +1,8 @@
-using Grpc.Core;
-using LClaproth.MyFinancialTracker.Transactions.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LClaproth.MyFinancialTracker.Transactions;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class BankTransactionService : Bank.Handler.HandlerBase
 {
     private readonly ILogger<BankTransactionService> _logger;
